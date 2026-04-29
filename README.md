@@ -1,22 +1,22 @@
 # Adaptive Adversarial A* (AAA*) for Security Operations
 
 ## Overview
-This project provides a procedural scenario generation framework designed to rigorously stress-test the deployment configurations of safety-critical robotic security systems. It operates as a deterministic Automated Red Team, exposing vulnerabilities in geometric and heuristic coverage strategies (e.g., Set Covering Problem solutions).
+This project provides a procedural scenario generation framework designed to stress-test a deployment configurations of safety-critical robotic security systems. It operates as a deterministic Automated Red Team, exposing vulnerabilities in geometric and heuristic coverage strategies (e.g., Set Covering Problem solutions).
 
-The framework introduces the Adaptive Adversarial A* (AAA*) algorithm. Unlike stochastic search testing (such as Monte Carlo or RRT), AAA* uses a spatial memory map that tracks successful capture events. It projects these past failures as dynamic, repulsive penalty fields onto the cost map. This forces the Red Team drones to systematically exploit the narrow topological corridors and temporal blind spots of the Blue Team's security architecture.
+The framework introduces the Adaptive Adversarial A* (AAA*) algorithm. Unlike stochastic search testing (such as Monte Carlo or RRT), AAA* uses a spatial memory map that tracks successful capture events. It projects these past failures as dynamic, repulsive penalty fields onto a cost map. This forces the Red Team drones to systematically exploit the narrow topological corridors and temporal blind spots of the Blue Team's security architecture.
 
 ## Key Entities
 1. **Blue Team (Security System):**
-   - **Launch Pads:** Static stations that hold and deploy active response units.
-   - **Cameras:** Static surveillance sensors with defined fields of view.
+   - **Launch Pads:** Static stations that hold and deploy active response units (drones).
+   - **Cameras:** Static surveillance cameras with defined fields of view.
    - **Blue Drones:** Active response drones launched from the pads that use Proportional Navigation (PN) to capture intruders.
 
 2. **Red Team (Adversary):**
-   - **Red Drones:** Adversarial agents that attempt to navigate from their spawn points to designated Regions of Interest (RoI/Targets) while evading the Blue Team.
+   - **Red Drones:** Adversarial units that attempt to navigate from their spawn points to designated Regions of Interest (RoI/Targets) while evading the Blue Team.
    - **AAA* Algorithm:** The pathfinding brain utilized by the red drones to learn from previous capture events and calculate optimal evasion trajectories.
 
 ## Curriculum of Difficulty
-The simulation progresses through 6 levels of difficulty designed to test system adaptability, transitioning from predictable static approaches to a dynamic Stackelberg Game where the Red Team possesses complete historical memory.
+The simulation progresses through 6 levels of difficulty designed to test system adaptability, transitioning from predictable approaches to a dynamic Stackelberg Game where the Red Team possesses complete historical memory.
 - **Levels 1-3:** Non-adaptive Red Team (Standard A* paths). Number of start points and target zones scale up.
 - **Level 4:** Partial adaptability (Memory resets every 10 drones).
 - **Levels 5-6:** Full adaptability (Memory accumulates indefinitely; Worst-Case Scenario).
@@ -34,10 +34,9 @@ The simulation progresses through 6 levels of difficulty designed to test system
   - **`data/`**: Data loading and pre-processing modules (`prep.py`).
 * `scripts/`
   - `evaluate.py`: The main entry point to evaluate your Blue Team configurations across all difficulty levels.
-  - `analyze_results.py`: Analyzes the output JSON data to plot basic performance lines (CR & ST) vs Simulation Level/Drone Number.
-  - `analyze_results_heatmap.py`: Creates optimized color-coded Performance Matrices to visualize system stress limits.
-  - `plot_level_performance_auto.py`: Side-by-side bar plots comparing algorithms at a single difficulty level.
-  - `plot_all_levels_performance_auto.py`: Generates comprehensive comparisons of algorithms across *all* levels for a specific swarm size.
+  - `plot_heatmaps.py`: Creates color-coded Performance Matrices to visualize system performance.
+  - `plot_res_by_levels.py`: Bar plots comparing algorithms at a single difficulty level for increasing swarm size.
+  - `plot_res_by_num_drones.py`: Generates comparisons of algorithms across all levels for a specific swarm size.
 * `results/`
   - JSON performance data and exported graphical analysis plots.
 
@@ -72,19 +71,14 @@ python scripts/evaluate.py
 ### 4. Analyze and Visualize the Results
 Once the evaluation is complete, use the analysis scripts to generate publication-ready plots. These scripts automatically read the JSON outputs from `results/`.
 
-**To generate side-by-side bar chart comparisons across swarm sizes and difficulty levels:**
+**To generate bar chart comparisons across swarm sizes and difficulty levels:**
 ```bash
-python scripts/plot_all_levels_performance_auto.py
-python scripts/plot_level_performance_auto.py
+python scripts/plot_res_by_levels.py
+python scripts/plot_res_by_num_drones.py
 ```
 
-**To generate line plots tracking trends:**
+**To generate Performance Matrix Heatmaps:**
 ```bash
-python scripts/analyze_results.py
-```
-
-**To generate high-contrast Performance Matrix Heatmaps:**
-```bash
-python scripts/analyze_results_heatmap.py
+python scripts/plot_heatmaps.py
 ```
 *All generated graphs are saved directly to `results/analysis_plots/`.*
