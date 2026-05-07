@@ -1,5 +1,9 @@
 # Adaptive Adversarial A* (AAA*) for Security Operations
 
+
+https://github.com/user-attachments/assets/b95a98d8-c6a5-472a-ad9f-2144cbe9f38f
+
+
 ## Overview
 This project provides a procedural scenario generation framework designed to stress-test a deployment configurations of safety-critical robotic security systems. It operates as a deterministic Automated Red Team, exposing vulnerabilities in geometric and heuristic coverage strategies (e.g., Set Covering Problem solutions).
 
